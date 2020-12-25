@@ -14,7 +14,7 @@ class ProductList extends Component {
   }
 
   async componentDidMount() {
-    if(Cookie.get('role') === 'Authenticated'){     
+    if(Cookie.get('role') === 'Authenticated' || Cookie.get('role') === 'Admin'){     
       let response = await fetch(process.env.REACT_APP_BACKEND_URL + "/products",{
         headers: {
           'Authorization':'bearer '+ Cookie.get('token'),

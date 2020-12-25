@@ -31,7 +31,7 @@ body, html {
   
 .App-header {
     display: flex;
-    height: auto;
+    height: 4rem;
     align-items: center;
     width: 100%;
     background-color: white;
@@ -67,10 +67,7 @@ body, html {
 }
     
 .App-content {
-    padding: 20px;
     width: 100%;
-    max-width: 1000px;
-
     flex: 1;
 }
 

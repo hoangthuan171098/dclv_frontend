@@ -9,7 +9,7 @@ import Product from './components/Product';
 import Login from './components/Login';
 import Register from './components/Register';
 import Logout from './utils/auth';
-
+import AdminPages from './pages/admin';
 
 
 class App extends Component {
@@ -23,6 +23,7 @@ class App extends Component {
             <Route path="/products/:id" component={Product} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
+            <Route path="/admin" component={AdminPages} />
           </Switch>
         </main >
         <Footer />

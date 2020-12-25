@@ -1,0 +1,68 @@
+.SideBar{
+    padding-top: 0.7rem;
+    position: absolute;
+    // inset: 4rem 0px 0px;
+    min-height: 550px;  
+    overflow-y: auto;
+    width: 240px;
+    box-sizing: border-box;
+    background-color: rgb(24, 32, 46);
+    .Group-name{
+        display: flex;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        padding: 10px 16px 0px 20px;
+        margin-bottom: 9px;
+        font-size: 15px;
+        color: rgb(91, 98, 111);
+        text-transform: uppercase;
+        max-height: 26px;
+        box-sizing: border-box;
+        font-family: Lato;
+    }
+    .Group-items{
+        max-height: 180px;
+        margin-bottom: 19px;
+        overflow: auto;
+        box-sizing: border-box;
+        font-family: Lato;
+        a{
+            color: rgba(255, 255, 255, 0.568);
+            padding:7px 0 2px 25px;
+            display: block;
+        }
+        a:hover{
+            background-color: rgb(28,36,49);
+            text-decoration: none;
+            border-left: solid 5px blue;
+        }
+    }
+}
+
+.content{
+    min-height:550px;
+    margin-left: 240px;
+    padding: 10px;
+    .DataList{
+        .DataList-title{
+            margin-bottom: 20px;
+        }
+        .DataList-container{
+            width: 90%;
+            margin: auto;
+            font-size: 2px;
+            table{
+                background-color: white;
+                thead{
+                    background-color: rgb(0, 47, 255);
+                    color: white;
+                }
+                tbody{
+                    tr:hover{
+                        background-color:rgb(247, 248, 248);
+                    }
+                }
+            }
+        }
+    }
+}
