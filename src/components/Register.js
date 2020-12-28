@@ -71,7 +71,6 @@ export default function Register() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log("register: " + email + "check: "+check)
     if(check){
       axios
         .post(process.env.REACT_APP_BACKEND_URL + '/users', {

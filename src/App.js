@@ -36,7 +36,7 @@ class App extends Component {
 const Header = () => {
   if(Cookie.get('username'))
     return(
-      <header className="App-header">
+      <header className="App-header stickyHeaderTop">
         <Link to="/"><h2>🐙Home</h2></Link>
         <div className="right">
           <span>hello, {Cookie.get('username')}</span>
@@ -45,7 +45,7 @@ const Header = () => {
       </header>
     );
   return (
-    <header className="App-header">
+    <header className="App-header stickyHeaderTop">
       <Link to="/"><h2>🐙Home</h2></Link>
       <div className="right">
         <Link to="/login"><h2>Login</h2></Link>

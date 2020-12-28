@@ -26,7 +26,12 @@ export default function Login() {
         Cookie.set("username",response.data.user.username)
         Cookie.set("token",response.data.jwt);
         Cookie.set("role",response.data.user.role.name)
-        window.location.href="/";
+        if(Cookie.get("role") === 'Admin'){
+          window.location.href="/admin";
+        }
+        else{
+          window.location.href="/";
+        }
       })
       .catch(error => {
         alert('email or password wrong, please check again!!!');

@@ -3,18 +3,22 @@ const AdminSideBar = () =>{
     return(
         <div className="SideBar">
             <div className="Group-name">
-                account manager
-            </div>
-            <div className="Group-items">
                 <a href="/admin">Dashboard</a>
-                <a href="/admin/accounts">accountList</a>
             </div>
             <div className="Group-name">
-                setting
+                Data manager
             </div>
             <div className="Group-items">
-                <a href="/adminDashboard">setting 1</a>
-                <a href="/adminDashboard">setting 2</a>
+                <a href="/admin/accounts">Accounts</a>
+                <a href="/admin/products">Products</a>
+                <a href="/admin/orders">Orders</a>
+            </div>
+            <div className="Group-name">
+                More
+            </div>
+            <div className="Group-items">
+                <a href="/adminDashboard">More 1</a>
+                <a href="/adminDashboard">More 2</a>
             </div>
         </div>
     );

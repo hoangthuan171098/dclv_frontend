@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import Cookie from "js-cookie";
 import axios from "axios";
 
-class AccountList extends Component {
+class OrderList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       loading: true,
       authenticate: true,
-      users: []
+      orders: []
     }
   }
 
   async componentDidMount() {
     if(Cookie.get('role') === 'Admin'){     
-      let response = await fetch(process.env.REACT_APP_BACKEND_URL + "/users",{
+      let response = await fetch(process.env.REACT_APP_BACKEND_URL + "/orders",{
         headers: {
           'Authorization':'bearer '+ Cookie.get('token'),
         },
@@ -23,8 +23,8 @@ class AccountList extends Component {
       if (!response.ok) {
         return
       }
-      let users = await response.json();
-      this.setState({ loading: false,authenticate: true, users: users });
+      let orders = await response.json();
+      this.setState({ loading: false,authenticate: true, orders: orders });
       return
     }
     this.setState({authenticate: false});
@@ -37,27 +37,27 @@ class AccountList extends Component {
 
   render() {
     const clickInfo = (id) =>{
-      window.location.href = "/admin/account/" + id;
+      window.location.href = "/admin/order/" + id;
     }
 
     const clickUpdate = (id) =>{
-      window.location.href = "/admin/account/" + id + "/update";
+      window.location.href = "/admin/order/" + id + "/update";
     }
 
     const clickDestroy = (id) =>{
       axios
-        .delete(process.env.REACT_APP_BACKEND_URL + "/users/" + id,{
+        .delete(process.env.REACT_APP_BACKEND_URL + "/orders/" + id,{
           headers: {
             'Authorization':'bearer '+ Cookie.get('token'),
           },
         })
         .then(response => {
           alert('Destroy success.');
-          window.location.href = "/admin/accounts"
+          window.location.href = "/admin/orders"
         })
         .catch(error => {
           // Handle error.
-          alert('Update failed !!!');
+          alert('Destroy failed !!!');
           console.log('An error occurred:', error.response);
         });
     }
@@ -65,13 +65,12 @@ class AccountList extends Component {
     if (!this.state.loading && Cookie.get('token')) {
       return (
         <div className="DataList">
-          <h2 className="DataList-title">Accounts ({this.state.users.length})</h2>
+          <h2 className="DataList-title">Orders ({this.state.orders.length})</h2>
           <div className="DataList-container">
             
             <div className="DataList-filter" onSubmit={this.filterSubmmitHandle}>
               <form className="form-inline w-100">
-                <input className="form-control" name="user_filter" type="text" placeholder="Tìm kiếm Theo Username"/>
-                <input className="form-control" name="gmail_filter" type="text" placeholder="Tìm kiếm Theo Gmail" />
+                <input className="form-control" name="status_filter" type="text" placeholder="Tìm kiếm Theo status"/>
               </form>
             </div>
 
@@ -79,31 +78,39 @@ class AccountList extends Component {
               <thead>
               <tr>
                   <th>ID</th>
-                  <th>Username</th>
-                  <th>Gmail</th>
-                  <th>Blocked</th>
-                  <th>Type</th>
+                  <th>Creator</th>
+                  <th>Status</th>
+                  <th>productList</th>
                   <th></th>
               </tr>
               </thead>
               <tbody>
-                {this.state.users.map((user, index) => {
+                {this.state.orders.map((order, index) => {
                   return (
                     <tr key={index}>
-                      <td>{user.id}</td>
-                      <td>{user.username}</td>
-                      <td>{user.email}</td>
-                      <td>{user.blocked.toString()}</td>
-                      <td>{user.role.name}</td>
+                      <td>{order.id}</td>
+                      <td>{order.creator}</td>
+                      <td>{order.status}</td>
+                      <td>
+                        {JSON.parse(order.productList).map((item,index)=>{
+                            if(index === 2)
+                                return(<p key={item.id}>...</p>);
+                            if(index === 3)
+                                return(<></>);
+                            return(
+                                <p key={item.id}>{item.name} x {item.quantity1} x {item.quantity2}</p>
+                            )
+                        })}
+                      </td>
                       <td>
                       <div className="dropdown">
                         <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                           Select
                         </button>
                         <div className="dropdown-menu">
-                          <button className="dropdown-item" onClick={() =>clickInfo(user.id)} >More Info</button>
-                          <button className="dropdown-item" onClick={() =>clickUpdate(user.id)} >Update</button>
-                          <button className="dropdown-item" onClick={() =>clickDestroy(user.id)} >Destroy</button>
+                          <button className="dropdown-item" onClick={() =>clickInfo(order.id)} >More Info</button>
+                          <button className="dropdown-item" onClick={() =>clickUpdate(order.id)} >Update</button>
+                          <button className="dropdown-item" onClick={() =>clickDestroy(order.id)} >Destroy</button>
                         </div>
                       </div>
                       </td>
@@ -123,4 +130,4 @@ class AccountList extends Component {
   }
 }
 
-export default AccountList;
+export default OrderList;

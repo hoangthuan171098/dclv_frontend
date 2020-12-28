@@ -30,6 +30,8 @@ body, html {
 }
   
 .App-header {
+    position: fixed;
+    top: 0;
     display: flex;
     height: 4rem;
     align-items: center;
@@ -39,6 +41,7 @@ body, html {
     font-size: 20px;
     color: $dark-grey;
     @include drop-shadow($dark-grey, 0.95);
+    z-index: 1;
 
     a {
         color: rgb(0, 47, 255);
@@ -67,6 +70,7 @@ body, html {
 }
     
 .App-content {
+    margin-top: 4rem;
     width: 100%;
     flex: 1;
 }

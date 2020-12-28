@@ -1,7 +1,6 @@
 .SideBar{
     padding-top: 0.7rem;
     position: absolute;
-    // inset: 4rem 0px 0px;
     min-height: 550px;  
     overflow-y: auto;
     width: 240px;
@@ -19,6 +18,12 @@
         max-height: 26px;
         box-sizing: border-box;
         font-family: Lato;
+        a{
+            color: inherit;
+        }
+        a:hover{
+            text-decoration: none;
+        }
     }
     .Group-items{
         max-height: 180px;
@@ -51,6 +56,14 @@
             width: 90%;
             margin: auto;
             font-size: 2px;
+            .DataList-filter{
+                form{
+                    margin: 20px;
+                    input{
+                        margin-right: 60px;
+                    }
+                }
+            }
             table{
                 background-color: white;
                 thead{

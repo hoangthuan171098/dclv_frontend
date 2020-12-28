@@ -70,17 +70,6 @@ class AccountInfo extends Component {
                                 {this.state.user.username}
                             </td>
                         </tr>
-                        <tr>    
-                            <td>
-                                <strong>
-                                    <span className="glyphicon glyphicon-user  text-primary"></span>    
-                                    Email:                                       
-                                </strong>
-                            </td>
-                            <td className="text-primary">
-                                {this.state.user.email}
-                            </td>
-                        </tr>
                         
                         <tr>        
                             <td>
