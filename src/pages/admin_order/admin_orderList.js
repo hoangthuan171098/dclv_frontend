@@ -98,7 +98,7 @@ class OrderList extends Component {
                             if(index === 3)
                                 return(<></>);
                             return(
-                                <p key={item.id}>{item.name} x {item.quantity1} x {item.quantity2}</p>
+                                <p key={item.id}>{item.name +" : " + item.quantity1 + " m," + item.quantity2 + " cuộn."}</p>
                             )
                         })}
                       </td>

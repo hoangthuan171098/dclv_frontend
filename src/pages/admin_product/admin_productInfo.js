@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import Cookie from "js-cookie";
 
-class AccountInfo extends Component {
+class ProductInfo extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       loading: true,
       authenticate: true,
-      user: {},
+      product: {},
     }
   }
 
   async componentDidMount() {
     if(Cookie.get('role') === 'Admin'){     
-      let response = await fetch(process.env.REACT_APP_BACKEND_URL + "/users/" + this.props.match.params.id,{
+      let response = await fetch(process.env.REACT_APP_BACKEND_URL + "/products/" + this.props.match.params.id,{
         headers: {
           'Authorization':'bearer '+ Cookie.get('token'),
         },
@@ -23,7 +23,8 @@ class AccountInfo extends Component {
         return
       }
       let data = await response.json();
-      this.setState({ loading: false,authenticate: true, user: data });
+      console.log(data)
+      this.setState({ loading: false,authenticate: true, product: data });
       return
     }
     this.setState({authenticate: false});
@@ -32,18 +33,18 @@ class AccountInfo extends Component {
 
   render() {
     const clickUpdate = () =>{
-      window.location.href = "/admin/account/" + this.state.user.id + "/update";
+      window.location.href = "/admin/product/" + this.state.product.id + "/update";
     }
 
     const clickBack = () =>{
-        window.location.href = "/admin/accounts";
+        window.location.href = "/admin/products";
     }
 
     if (!this.state.loading && Cookie.get('token')) {
       return (
         <div className="container bootstrap snippet">
             <div className="panel-body inf-content col-xl-8 offset-xl-2">
-                <strong>THÔNG TIN TÀI KHOẢN :</strong><br/>
+                <strong>THÔNG TIN SẢN PHẨM :</strong><br/>
 
                 <div className="table-responsive">
                 <table className="table table-user-information">
@@ -52,22 +53,44 @@ class AccountInfo extends Component {
                             <td>
                                 <strong>
                                     <span className="glyphicon glyphicon-asterisk text-primary"></span>
-                                    Account ID:                                            
+                                    Product ID:                                            
                                 </strong>
                             </td>
                             <td className="text-primary">
-                                {this.state.user.id}
+                                {this.state.product.id}
                             </td>
                         </tr>
                         <tr>    
                             <td>
                                 <strong>
                                     <span className="glyphicon glyphicon-user  text-primary"></span>    
-                                    Username:                                       
+                                    Name :                                       
                                 </strong>
                             </td>
                             <td className="text-primary">
-                                {this.state.user.username}
+                                {this.state.product.name}
+                            </td>
+                        </tr>
+                        <tr>    
+                            <td>
+                                <strong>
+                                    <span className="glyphicon glyphicon-user  text-primary"></span>    
+                                    Description :                                       
+                                </strong>
+                            </td>
+                            <td className="text-primary">
+                                {this.state.product.description}
+                            </td>
+                        </tr>
+                        <tr>    
+                            <td>
+                                <strong>
+                                    <span className="glyphicon glyphicon-user  text-primary"></span>    
+                                    Category:                                       
+                                </strong>
+                            </td>
+                            <td className="text-primary">
+                                {this.state.product.category.name}
                             </td>
                         </tr>
                         
@@ -79,7 +102,7 @@ class AccountInfo extends Component {
                                 </strong>
                             </td>
                             <td className="text-primary">
-                                {this.state.user.createdAt}
+                                {this.state.product.createdAt}
                             </td>
                         </tr>
                         
@@ -87,35 +110,11 @@ class AccountInfo extends Component {
                             <td>
                                 <strong>
                                     <span className="glyphicon glyphicon-cloud text-primary"></span>  
-                                    Role:                                           
+                                    Last Update:                                           
                                 </strong>
                             </td>
                             <td className="text-primary">
-                                {this.state.user.role.name}
-                            </td>
-                        </tr>
-                        
-                        <tr>        
-                            <td>
-                                <strong>
-                                    <span className="glyphicon glyphicon-cloud text-primary"></span>  
-                                    Blocked:                                     
-                                </strong>
-                            </td>
-                            <td className="text-primary">
-                                {this.state.user.blocked.toString()}
-                            </td>
-                        </tr>
-
-                        <tr>        
-                            <td>
-                                <strong>
-                                    <span className="glyphicon glyphicon-cloud text-primary"></span>  
-                                    Confirmed:                                 
-                                </strong>
-                            </td>
-                            <td className="text-primary">
-                                {this.state.user.confirmed.toString()}
+                                {this.state.product.updatedAt}
                             </td>
                         </tr>
 
@@ -142,4 +141,4 @@ class AccountInfo extends Component {
   }
 }
 
-export default AccountInfo;
+export default ProductInfo;

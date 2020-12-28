@@ -5,14 +5,15 @@ import '../styles/pages/adminPages.scss';
 
 import AdminSideBar from '../components/AdminSideBar';
 import AdminDashboard from './admin_dashBoard';
-import AccountList from './admin_accountList';
-import AccountInfo from './admin_accountInfo';
-import AccountUpdate from './admin_accountUpdate';
-import ProductList from './admin_productList';
-import ProductUpdate from './admin_productUpdate';
-import ProductCreate from './admin_productCreate';
-import OrderList from './admin_orderList';
-import OrderUpdate from './admin_orderUpdate';
+import AccountList from './admin_account/admin_accountList';
+import AccountInfo from './admin_account/admin_accountInfo';
+import AccountUpdate from './admin_account/admin_accountUpdate';
+import ProductList from './admin_product/admin_productList';
+import ProductInfo from './admin_product/admin_productInfo';
+import ProductUpdate from './admin_product/admin_productUpdate';
+import ProductCreate from './admin_product/admin_productCreate';
+import OrderList from './admin_order/admin_orderList';
+import OrderUpdate from './admin_order/admin_orderUpdate';
 
 class AdminPages extends Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class AdminPages extends Component {
               <Route path="/admin/account/:id/update" component={AccountUpdate} />
               <Route path="/admin/products" exact component={ProductList} />
               <Route path="/admin/products/create" component={ProductCreate} />
+              <Route path="/admin/product/:id/" exact component={ProductInfo} />
               <Route path="/admin/product/:id/update" component={ProductUpdate} />
               <Route path="/admin/orders" component={OrderList} />
               <Route path="/admin/order/:id/update" component={OrderUpdate} />

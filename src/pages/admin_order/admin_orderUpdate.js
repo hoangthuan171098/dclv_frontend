@@ -9,6 +9,7 @@ class OrderUpdate extends Component {
     this.state = {
       loading: true,
       authenticate: true,
+      list: [],
       order: {},
     }
   }
@@ -24,7 +25,9 @@ class OrderUpdate extends Component {
         return
       }
       let data = await response.json();
-      this.setState({ loading: false, authenticate: true, order: data });
+      let list = JSON.parse(data.productList);
+      this.setState({ loading: false, authenticate: true, order: data, list: list});
+      Cookie.set('list',list);
       return
     }
     this.setState({authenticate: false});
@@ -36,7 +39,7 @@ class OrderUpdate extends Component {
       axios
         .put(process.env.REACT_APP_BACKEND_URL + '/orders/' + this.state.order.id, {
             status: this.state.order.status,
-            productList: this.state.order.productList
+            productList: Cookie.get('list')
         },{
             headers: {
                 'Authorization':'bearer '+ Cookie.get('token'),
@@ -60,8 +63,14 @@ class OrderUpdate extends Component {
 
     const removeItem = (id,event) => {
         event.preventDefault();
-        console.log(this.state.order.productList);
-        clickSubmit(event);
+        let list = this.state.list;
+        const index = list.findIndex((i) => i.id === id);
+        
+        list.splice(index, 1);
+        document.getElementsByClassName("remove-"+id)[0].setAttribute('disabled',true);
+        document.getElementsByClassName("remove-"+id)[0].innerHTML = "Removed";
+        Cookie.set('list',list);
+        this.setState({list:list});
       };
 
 
@@ -104,7 +113,7 @@ class OrderUpdate extends Component {
                                         <div className="cart-item" key={index}>
                                             {item.name + " : " + item.quantity1 +" mét ," + item.quantity2 +" cuộn."}
                                             <button onClick={(e)=>{removeItem(item.id,e)}}
-                                            className="btn btn-success"> Remove </button>
+                                            className={"btn btn-success remove-"+item.id}> Remove </button>
                                         </div>
                                         )
                                     })}

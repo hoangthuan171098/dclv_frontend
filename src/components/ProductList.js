@@ -89,6 +89,7 @@ class ProductList extends Component {
       const itemList = [...this.state.cart.items];
       const index = items.findIndex((i) => i.id === removeItem.id);
 
+      console.log(typeof(itemList));
       itemList.splice(index, 1);
       console.log(itemList);
       this.setState(
@@ -147,6 +148,15 @@ class ProductList extends Component {
       this.setState({cart: {items:[],total:0}});
     }
 
+    const showPrice = (product,type) =>{
+      if(Number(product.price) > 0 && type === "m"){
+        return(<p>Giá (1m) :{Number(product.price)}</p>)
+      }
+      if(Number(product.price2) > 0 && type === "cuộn"){
+        return(<p>Giá (1 cuộn) :{Number(product.price2)}</p>)
+      }
+    }
+
     if (!this.state.loading && Cookie.get('token')) {
       return (
         <div className="ProductList">
@@ -154,8 +164,22 @@ class ProductList extends Component {
           <div className="ProductList-container">
             {this.state.products.map((product, index) => {
               let formClassName = "form-group form-for-" + product.id;
-              let inputClassName1 = "form-control input1-for-" + product.id;
-              let inputClassName2 = "form-control input2-for-" + product.id;
+              let inputClassName1 = "form-control ip1 input1-for-" + product.id;
+              let inputClassName2 = "form-control ip2 input2-for-" + product.id;
+              let disabled1;
+              let disabled2;
+              if(Number(product.price) > 0){
+                disabled1 = false;
+              }
+              else{
+                disabled1 = true;
+              }
+              if(Number(product.price2) > 0){
+                disabled2 = false;
+              }
+              else{
+                disabled2 = true;
+              }
               return (
                 <div className="ProductList-product" key={product.id}>
                   <Link to={`/products/${product.id}`}>
@@ -164,8 +188,8 @@ class ProductList extends Component {
 
                     <h6>Loại: {product.category.name}</h6>
                     <p>{product.description}</p>
-                    <p>Giá (1m) :{product.price}</p>
-                    <p>Giá (1 cuộn) :{product.price2}</p>
+                    {showPrice(product,'m')}
+                    {showPrice(product,'cuộn')}
 
                   <button onClick={()=>clickBuyButton(product.id)}
                   className="btn btn-primary"> Mua </button>
@@ -174,10 +198,10 @@ class ProductList extends Component {
                   price1:Number(product.price),price2:Number(product.price2)})}}>
                     <div className="row">
                       <div className="col-lg-4">
-                        <input className={inputClassName1} type="number" placeholder="số mét"/>
+                        <input className={inputClassName1} type="number" disabled={disabled1} placeholder="số mét"/>
                       </div>
                       <div className="col-lg-4">
-                        <input className={inputClassName2} type="number" placeholder="số cuộn"/>
+                        <input className={inputClassName2} type="number" disabled={disabled2} placeholder="số cuộn"/>
                       </div>
                       <div className="col-lg-1">
                         <input className="btn btn-primary" type="submit" value="Xác nhận"/>

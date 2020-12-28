@@ -13,8 +13,8 @@ class ProductCreate extends Component {
       product: {name: "",
                 description: "",
                 category: "kaki",
-                price1: 0,
-                price2: 0,
+                price1: "",
+                price2: "",
       },
     }
   }
@@ -39,6 +39,10 @@ class ProductCreate extends Component {
   render() {
     const clickSubmit = (event) =>{
       event.preventDefault();
+      if(Number(this.state.product.price1) < 1 && Number(this.state.product.price2) < 1){
+        alert("You must input at least 1 price value");
+        return
+      }
       axios
         .post(process.env.REACT_APP_BACKEND_URL + '/products/', {
           description: this.state.product.description,
@@ -65,6 +69,20 @@ class ProductCreate extends Component {
     const clickBack = (event) =>{
       event.preventDefault();
       window.location.href = "/admin/products";
+    }
+
+    const handleChangeCategory = async (categoryName) =>{
+      let response = await fetch(process.env.REACT_APP_BACKEND_URL + '/product-categories?name=' + categoryName ,{
+        headers: {
+          'Authorization':'bearer '+ Cookie.get('token'),
+        },
+      });
+      if (!response.ok) {
+        return;
+      }
+      let data = await response.json();
+      console.log(data[0]);
+      this.setState({ category: data[0] });
     }
 
 
@@ -105,17 +123,17 @@ class ProductCreate extends Component {
                         <div className="row">
                             <div className="col-lg-6">
                                 <div className="form-group">
-                                    <label>Price1 :</label>
-                                    <input type="number" className="form-control" value={this.state.product.price1} required="required"
-                                        data-error="Name is required." onChange={(e)=>this.setState({product:{...this.state.product,price1:e.target.value}})} />
+                                    <label>Price (1m) :</label>
+                                    <input type="number" className="form-control" value={this.state.product.price1}
+                                        onChange={(e)=>this.setState({product:{...this.state.product,price1:e.target.value}})} />
                                     <div className="help-block with-errors"></div>
                                 </div>
                             </div>
                             <div className="col-lg-6">
                                 <div className="form-group">
-                                    <label>Price2 :</label>
-                                    <input type="number" className="form-control" value={this.state.product.price2} required="required"
-                                        data-error="Name is required." onChange={(e)=>this.setState({product:{...this.state.product,price2:e.target.value}})} />
+                                    <label>Price (1 cuộn) :</label>
+                                    <input type="number" className="form-control" value={this.state.product.price2}
+                                        onChange={(e)=>this.setState({product:{...this.state.product,price2:e.target.value}})} />
                                     <div className="help-block with-errors"></div>
                                 </div>
                             </div>
@@ -124,8 +142,8 @@ class ProductCreate extends Component {
                             <div className="col-lg-6">
                                 <div className="form-group">
                                     <label htmlFor="form_category">Category :</label>
-                                    <select id="form_category" className="form-control" value={this.state.categoryValue} 
-                                     onChange={(e)=>this.setState({categoryValue:e.target.value})}>
+                                    <select id="form_category" className="form-control" value={this.state.category.name} 
+                                     onChange={(e)=>handleChangeCategory(e.target.value)}>
                                         <option value="cotton"> cotton</option>
                                         <option value="kaki"> kaki</option>
                                         <option value="kate"> kate</option>
